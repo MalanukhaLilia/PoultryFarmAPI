@@ -18,23 +18,8 @@ namespace PoultryFarmApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBird([FromBody] Bird bird)
         {
-            try
-            {
-                var createdBird = await _birdService.RegisterNewBirdAsync(bird);
-                return Ok(createdBird);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return Conflict(ex.Message);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var createdBird = await _birdService.RegisterNewBirdAsync(bird);
+            return CreatedAtAction(nameof(CreateBird), new { id = createdBird.Id }, createdBird);
         }
 
         [HttpGet]
@@ -47,29 +32,15 @@ namespace PoultryFarmApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Bird bird)
         {
-            try
-            {
-                await _birdService.UpdateBirdAsync(id, bird);
-                return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            await _birdService.UpdateBirdAsync(id, bird);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _birdService.DeleteBirdAsync(id);
-                return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            await _birdService.DeleteBirdAsync(id);
+            return NoContent();
         }
     }
 }

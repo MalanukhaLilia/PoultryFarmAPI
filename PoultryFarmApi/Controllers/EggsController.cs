@@ -18,26 +18,14 @@ namespace PoultryFarmApi.Controllers
         [HttpPost]
         public async Task<IActionResult> RecordEggs([FromBody] EggProduction production)
         {
-            try
-            {
-                await _eggService.RecordProductionAsync(production);
-                return Ok("Production recorded successfully.");
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            await _eggService.RecordProductionAsync(production);
+            return Ok("Production recorded successfully.");
         }
 
         [HttpGet("stats/{id}")]
         public async Task<IActionResult> GetTotalGoodEggs(int id)
         {
             var total = await _eggService.GetTotalGoodEggsForCoopAsync(id);
-
             return Ok(new { CoopId = id, TotalGoodEggs = total });
         }
     }

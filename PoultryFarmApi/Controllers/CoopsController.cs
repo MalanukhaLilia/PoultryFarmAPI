@@ -24,14 +24,7 @@ namespace PoultryFarmApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                return Ok(await _coopService.GetCoopByIdAsync(id));
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
+            return Ok(await _coopService.GetCoopByIdAsync(id));
         }
 
         [HttpPost]
@@ -44,29 +37,15 @@ namespace PoultryFarmApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Coop coop)
         {
-            try
-            {
-                await _coopService.UpdateCoopAsync(id, coop);
-                return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
+            await _coopService.UpdateCoopAsync(id, coop);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _coopService.DeleteCoopAsync(id);
-                return NoContent();
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
+            await _coopService.DeleteCoopAsync(id);
+            return NoContent();
         }
     }
 }

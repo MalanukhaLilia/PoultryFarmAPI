@@ -1,4 +1,6 @@
-﻿namespace PoultryFarmApi.Models
+﻿using System.Text.Json.Serialization;
+
+namespace PoultryFarmApi.Models
 {
     public class EggProduction
     {
@@ -8,6 +10,8 @@
         public DateTime CollectionDate { get; set; }
 
         public int CoopId { get; set; }
-        public Coop Coop { get; set; }
+
+        [JsonIgnore]
+        public Coop? Coop { get; set; }
     }
 }
